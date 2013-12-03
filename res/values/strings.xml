@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">contactsBackup</string>
+    <string name="action_settings">Settings</string>
+    <string name="scanLabelText"></string>
+    <string name="scanButtonText">Read contacts</string>
+    <string name="statusLabelText">Waiting, nothing read...</string>
+
+</resources>
