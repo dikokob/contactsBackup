@@ -3,6 +3,7 @@ package com.scr.utilities.contactsbackup;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.Contacts;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -11,6 +12,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.*;
+
 import com.scr.utilities.IO.*;
 
 public class MainActivity extends Activity
@@ -18,6 +21,7 @@ public class MainActivity extends Activity
 	private String contactsFileName;
 	private TextView _statusTextView;
 	private static String ApplicationFolder = "EZContactsBackup";
+	private FileOutputStream _file;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,73 @@ public class MainActivity extends Activity
 		return true;
 	}
 	
+	protected void _readSIMContacts(OutputStream _stream)
+	{
+		String contactName = null, contactNumber = null;
+		String [] projection = new String[]
+				{
+					Contacts.DISPLAY_NAME,
+					ContactsContract.CommonDataKinds.Phone.NUMBER
+				};
+		String sortOrder       = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
+		Uri simUriQuery = Uri.parse("content://icc/adn");
+		Cursor results;
+		FileOutputStream _writer = (FileOutputStream)_stream;
+		results = this.getContentResolver().query( simUriQuery, projection, null, null, Contacts.DISPLAY_NAME + " ASC");
+		while( results.moveToNext())
+		{
+			contactName = results.getString( results.getColumnIndex("name"));
+			contactNumber = results.getString( results.getColumnIndex("number"));
+			try
+			{
+				_writer.write( contactName.getBytes());
+				_writer.write( contactNumber.getBytes());
+				_writer.write('\r');
+				_writer.write( '\n');
+			}
+			catch(IOException ex)
+			{
+				Log.e(STORAGE_SERVICE, ex.getMessage());
+			}
+		}
+	}
+	
 	public void readContacts( View _view )
 	{
-		switch( Folder.MKDIR(MainActivity.ApplicationFolder) )
+		File folder = null;
+		ObjectWrapper wrapper = new ObjectWrapper();
+		switch( Folder.MKDIR(MainActivity.ApplicationFolder, wrapper) )
 		{
 			case 0:
-				String ClsSimPhonename = null; String ClsSimphoneNo = null;
 				this._statusTextView.setText( "Folder created: " + MainActivity.ApplicationFolder);
+				folder = (File)wrapper.getReference();
+				try
+				{
+					_file = new FileOutputStream(folder.getAbsolutePath() + "/asd.txt");
+					this._readSIMContacts(_file);
+				}
+				catch(FileNotFoundException ex)
+				{
+					
+				}
+				finally
+				{
+					if( _file != null)
+					{
+						try
+						{
+							_file.flush();
+							_file.close();
+						} catch (IOException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+				/*
+				String ClsSimPhonename = null; String ClsSimphoneNo = null;
+				
 				ContentResolver _contentResolver = this.getContentResolver();
 				Uri simUri = Uri.parse("content://icc/adn"); 
 			    Cursor cursorSim = this.getContentResolver().query(simUri,null,null,null,null);
@@ -56,6 +120,7 @@ public class MainActivity extends Activity
 			            //dts.createDatabse("MyCellFamily",getApplicationContext());
 
 			    }
+			    */
 				/*Cursor _cursor = _contentResolver.query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 				while (_cursor.moveToNext())
 				{

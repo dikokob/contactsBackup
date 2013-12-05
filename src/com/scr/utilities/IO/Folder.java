@@ -19,10 +19,10 @@ public class Folder
 	 * This method would create a folder with the specified name on the external storage
 	 * @return 0 -> No error, -1 -> Can not create the folder, mkdir failed, -2 -> An error on the external storage
 	 */
-	public static int MKDIR( String _folderName)
+	public static int MKDIR( String _folderName, ObjectWrapper _outRefence)
 	{
 		String _storageStatus;
-		File _fileManager;
+		File _fileManager = null;
 		int _result = -2;
 		_storageStatus = Environment.getExternalStorageState();
 		if( Environment.MEDIA_MOUNTED.equals(_storageStatus) || Environment.MEDIA_SHARED.equals(_storageStatus))
@@ -44,6 +44,7 @@ public class Folder
 				_result = 0;
 			}
 		}
+		_outRefence.setReference( _fileManager );
 		return _result;
 	}
 }
