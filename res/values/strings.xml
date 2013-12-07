@@ -6,5 +6,10 @@
     <string name="scanLabelText"></string>
     <string name="scanButtonText">Read contacts</string>
     <string name="statusLabelText">Waiting, nothing read...</string>
+    <string name="emailButtonText">Send as email</string>
+    <string name="title_activity_general">GeneralActivity</string>
+    <string name="checkBoxReadPhoneContactsText">Read phone contacts</string>
+    <string name="checkBoxReadSIMContactsText">Read SIM contacts</string>
+    <string name="textViewFragmentReadContacs">Reading options:</string>
 
 </resources>

@@ -33,10 +33,17 @@
             android:id="@+id/scanButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="17dp"
+            android:layout_gravity="center"
             android:onClick="readContacts"
             android:text="@string/scanButtonText" />
+
+        <Button
+            android:id="@+id/emailButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="sendEmailPressed"
+            android:text="@string/emailButtonText" />
 
     </LinearLayout>
 

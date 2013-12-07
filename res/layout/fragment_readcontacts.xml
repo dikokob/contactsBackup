@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/GridLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="1"
+    android:rowCount="6"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_gravity="left"
+        android:text="@string/textViewFragmentReadContacs" />
+
+    <CheckBox
+        android:id="@+id/checkBoxReadSIMContacts"
+        android:layout_gravity="center_horizontal"
+        android:enabled="false"
+        android:checked="true"
+        android:text="@string/checkBoxReadSIMContactsText" />
+    
+    <CheckBox
+        android:id="@+id/checkBoxReadPhoneContacts"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/checkBoxReadPhoneContactsText" />
+
+    <Button
+        android:id="@+id/buttonReadContacts"
+        android:layout_gravity="center_horizontal"
+        android:layout_row="4"
+        android:text="@string/scanButtonText" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_column="0"
+        android:layout_gravity="right|bottom"
+        android:layout_row="5"
+        android:text="Button" />
+
+</GridLayout>
