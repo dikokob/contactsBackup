@@ -43,20 +43,23 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_readcontacts, container, false);
+                             Bundle savedInstanceState)
+	{
+		Button _button;
+		// Inflate the layout for this fragment
+		View createdView = inflater.inflate(R.layout.fragment_readcontacts, container, false);
+        _button = (Button)createdView.findViewById(R.id.buttonReadContacts);
+		_button.setOnClickListener(this);
+		this._checkBoxSIMContacts = (CheckBox)createdView.findViewById(R.id.checkBoxReadSIMContacts);
+		this._checkBoxPhoneContacts = (CheckBox)createdView.findViewById(R.id.checkBoxReadPhoneContacts);
+		
+        return createdView;
     }
 	
 	@Override
 	public void onCreate (Bundle savedInstanceState)
 	{
-		Button _button;
 		super.onCreate(savedInstanceState);
-		this._checkBoxSIMContacts = (CheckBox)this.getActivity().findViewById(R.id.checkBoxReadSIMContacts);
-		this._checkBoxPhoneContacts = (CheckBox)this.getActivity().findViewById(R.id.checkBoxReadPhoneContacts);
-		_button = (Button)this.getActivity().findViewById(R.id.buttonReadContacts);
-		_button.setOnClickListener(this);
 		this._contacts = new AddressBook();
 	}
 	
@@ -155,7 +158,7 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 		switch( _v.getId() )
 		{
 			case R.id.buttonReadContacts:
-				Log.d("ASd","ASD");
+				this.readContactsButtonPressed(_v);
 				break;
 		}
 	}
