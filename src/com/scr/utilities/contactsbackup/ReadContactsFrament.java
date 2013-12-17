@@ -24,10 +24,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.database.Cursor;
 
 import com.scr.utilities.IO.*;
+import com.scr.utilities.contactsbackup.ThreadedReaderParameters.ReadingOptions;
 import com.scr.mobile.phone.contacts.*;
 
 /**
@@ -87,6 +89,18 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 	
 	public void readContactsButtonPressed( View _view )
 	{
+		Thread _readerThread = null;
+		ContactsReader _threadContactsReader = null;
+		ThreadedReaderParameters _threadParameters = null;
+		_threadParameters = new ThreadedReaderParameters( this.getActivity(), _contacts, _view, ReadingOptions.SIM);
+		ProgressDialog readingDialog = new ProgressDialog( this.getActivity());
+		readingDialog.setProgressStyle(readingDialog.STYLE_HORIZONTAL);
+		readingDialog.setProgress(0);
+		readingDialog.setCancelable(true);
+		readingDialog.show();
+		_readerThread = new Thread(new )
+		
+		/*
 		File folder = null;
 		ObjectWrapper wrapper = new ObjectWrapper();
 		Date dateNow = new Date();
@@ -127,7 +141,7 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 						}
 					}
 				}
-				
+		*/		
 				/*Cursor _cursor = _contentResolver.query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 				while (_cursor.moveToNext())
 				{
@@ -136,7 +150,7 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 					System.out.println(name + "   " + phoneNumber);
 		        }
 				*/
-		
+		/*
 				break;
 			case -1:
 				Toast.makeText( this.getActivity(), "Error creating the specified folder", Toast.LENGTH_SHORT).show();
@@ -150,6 +164,7 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 		{
 			
 		}
+		*/
 	}
 
 	@Override
