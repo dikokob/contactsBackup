@@ -3,6 +3,7 @@
  */
 package com.scr.utilities.contactsbackup;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 
 /**
@@ -11,6 +12,17 @@ import android.app.ProgressDialog;
  */
 public class UIProgressDialogUpdater extends UIDialogUpdater
 {
+	protected int maxValue;
+	protected int incrementStep;
+	public UIProgressDialogUpdater( Dialog _ref, int _maxValue,int _increment )
+	{
+		this._dialogReference = _ref;
+		ProgressDialog _dialogRef = (ProgressDialog)this._dialogReference;
+		this.maxValue = _maxValue;
+		this.incrementStep = _increment;
+		_dialogRef.setMax( this.maxValue);
+		_dialogRef.setProgress(0);
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Runnable#run()
@@ -19,7 +31,8 @@ public class UIProgressDialogUpdater extends UIDialogUpdater
 	public void run()
 	{
 		ProgressDialog _dialogRef = (ProgressDialog)this._dialogReference;
-		_dialogRef.incrementProgressBy(1);
+		_dialogRef.incrementProgressBy(this.incrementStep);
+		if( _dialogRef.getProgress() >= this.maxValue )
+			_dialogRef.dismiss();
 	}
-
 }

@@ -23,14 +23,13 @@ public class ContactsReader implements Runnable
 	protected ThreadedReaderParameters _readingParameters;
 	protected int progress, goal;
 	protected Handler _handler;
-	protected UIProgressBarUpdater _progressBarUpdater;
+	protected UIProgressDialogUpdater _dialogUpdater;
 	
 	public ContactsReader( Object _readingOptions )
 	{
 		this._readingParameters = (ThreadedReaderParameters)_readingOptions;
 		this._currentStatus = ContactsReader.Status.None;
-		this._progressBarUpdater = new UIProgressBarUpdater();
-		this._progressBarUpdater._uiReference = _readingParameters._viewReference;
+		this._handler = new Handler();
 	}
 	
 	/* (non-Javadoc)
@@ -52,6 +51,8 @@ public class ContactsReader implements Runnable
 		results = this._readingParameters._activity.getContentResolver().query( simUriQuery, projection, null, null, null);
 		this.goal = results.getCount();
 		this.progress = 0;
+		this._dialogUpdater = new UIProgressDialogUpdater(this._readingParameters._dialogReference, this.goal, 1);
+		//this._dialogUpdater._dialogReference = _readingParameters._dialogReference;
 		while( results.moveToNext())
 		{
 			contactName = results.getString( results.getColumnIndex("name"));
@@ -59,7 +60,14 @@ public class ContactsReader implements Runnable
 			contactTmp = new SIMContact(contactName, contactNumber);
 			this._readingParameters._bookReference._book.put( contactTmp._name, contactTmp);
 			this.progress++;
-			this._handler.post( this._progressBarUpdater );
+			this._handler.post( this._dialogUpdater );
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(this.progress);
 		}
 		results.close();
 	}
