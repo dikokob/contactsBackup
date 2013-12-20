@@ -6,8 +6,10 @@ package com.scr.utilities.contactsbackup;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.preference.DialogPreference;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
+import android.widget.ProgressBar;
 
 import com.scr.mobile.phone.contacts.Contact;
 import com.scr.mobile.phone.contacts.SIMContact;
@@ -51,8 +53,7 @@ public class ContactsReader implements Runnable
 		results = this._readingParameters._activity.getContentResolver().query( simUriQuery, projection, null, null, null);
 		this.goal = results.getCount();
 		this.progress = 0;
-		this._dialogUpdater = new UIProgressDialogUpdater(this._readingParameters._dialogReference, this.goal, 1);
-		//this._dialogUpdater._dialogReference = _readingParameters._dialogReference;
+		this._dialogUpdater = new UIProgressDialogUpdater(this._readingParameters._dialogReference, this.goal, 1, "Reading SIM contacts");
 		while( results.moveToNext())
 		{
 			contactName = results.getString( results.getColumnIndex("name"));
@@ -67,9 +68,13 @@ public class ContactsReader implements Runnable
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println(this.progress);
 		}
 		results.close();
+	}
+	
+	protected void _updateTitle()
+	{
+		
 	}
 
 }

@@ -92,12 +92,14 @@ public class ReadContactsFrament extends Fragment implements OnClickListener
 		Thread _readerThread = null;
 		ContactsReader _threadContactsReader = null;
 		ThreadedReaderParameters _threadParameters = null;
+		this._contacts._book.clear();
 		_threadParameters = new ThreadedReaderParameters( this.getActivity(), _contacts, ReadingOptions.SIM);
 		ProgressDialog readingDialog = new ProgressDialog( this.getActivity());
-		readingDialog.setProgressStyle(readingDialog.STYLE_HORIZONTAL);
+		readingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		readingDialog.setIndeterminate(true);
 		readingDialog.setProgress(0);
 		readingDialog.setCancelable(false);
-		readingDialog.setTitle("Reading SIM contacts");
+		readingDialog.setTitle("Fetching SIM contacts");
 		_threadParameters._dialogReference = readingDialog;
 		_threadContactsReader = new ContactsReader( _threadParameters);
 		_readerThread = new Thread( _threadContactsReader );

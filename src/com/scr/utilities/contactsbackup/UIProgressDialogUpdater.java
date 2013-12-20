@@ -22,6 +22,19 @@ public class UIProgressDialogUpdater extends UIDialogUpdater
 		this.incrementStep = _increment;
 		_dialogRef.setMax( this.maxValue);
 		_dialogRef.setProgress(0);
+		_dialogRef.setIndeterminate(false);
+	}
+	
+	public UIProgressDialogUpdater( Dialog _ref, int _maxValue,int _increment, String _newTitle )
+	{
+		this._dialogReference = _ref;
+		ProgressDialog _dialogRef = (ProgressDialog)this._dialogReference;
+		this.maxValue = _maxValue;
+		this.incrementStep = _increment;
+		_dialogRef.setTitle(_newTitle);
+		_dialogRef.setMax( this.maxValue);
+		_dialogRef.setProgress(0);
+		_dialogRef.setIndeterminate(false);
 	}
 
 	/* (non-Javadoc)
